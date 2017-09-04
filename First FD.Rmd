@@ -4,6 +4,10 @@ output:
   flexdashboard::flex_dashboard:
     orientation: columns
     vertical_layout: fill
+    dataset: 
+    Bundesliga Transfer Sums
+    Bundesliga Final Standings
+    url: https://cran.r-project.org/web/packages/SportsAnalytics/SportsAnalytics.pdf
 ---
 
 ```{r setup, include=FALSE}
@@ -16,7 +20,13 @@ Column {data-width=650}
 ### Chart A
 
 ```{r}
-
+library(tidyverse)
+library(flexdashboard)
+library(data.table)
+#load data
+dt <- data(BundesligaTransferSums)
+dt <- data.table(dt)
+qplot(dt.Season, dt.Spendings, data = dt, color = Team)
 ```
 
 Column {data-width=350}
