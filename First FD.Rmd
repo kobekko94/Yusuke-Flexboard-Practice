@@ -1,32 +1,31 @@
 ---
-title: "Yusuke's First FD"
+title: "Focus Across Sessions"
+author: "Yusuke"
+date: "Sep 5, 2017"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
     vertical_layout: fill
-    dataset: 
-    Bundesliga Transfer Sums
-    Bundesliga Final Standings
-    url: https://cran.r-project.org/web/packages/SportsAnalytics/SportsAnalytics.pdf
 ---
 
 ```{r setup, include=FALSE}
-library(flexdashboard)
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+source('helper_code/load_data.R')
+source('helper_code/utility_functions.R')
 ```
 
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Chart A
+### Cognitive Score time-series (Summer, 2015)
 
-```{r}
-library(tidyverse)
-library(flexdashboard)
-library(data.table)
-#load data
-dt <- data(BundesligaTransferSums)
-dt <- data.table(dt)
-qplot(dt.Season, dt.Spendings, data = dt, color = Team)
+```{r summer-2015-counts}
+summer.2015.lumos.df %>% count(game) %>% 
+  # Add some human-readable names
+  left_join(summer.2015.lumos.df %>% select(game, game_name) %>% unique(),
+            by="game")
+plot_game(summer.2015.lumos.df)
 ```
 
 Column {data-width=350}
