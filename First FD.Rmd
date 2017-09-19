@@ -2,7 +2,7 @@
 title: "Focus Across Sessions"
 author: "Yusuke"
 date: "Sep 5, 2017"
-output: 
+output:
   flexdashboard::flex_dashboard:
     orientation: columns
     vertical_layout: fill
@@ -11,21 +11,32 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-source('helper_code/load_data.R')
-source('helper_code/utility_functions.R')
+library(ggplot2)
+library(SportsAnalytics)
+# source('helper_code/load_data.R')
+# source('helper_code/utility_functions.R')
 ```
 
 Column {data-width=650}
 -----------------------------------------------------------------------
 
+```{r}
+data("BundesligaFinalStandings")
+BundesligaFinalStandings %>% filter(Team == "Bayern München") %>%
+  ggplot(aes(x=Wins, y=PointsScored)) +
+    geom_col(position = 'dodge', width=0.1)
+    # geom_point()
+```
+
+
 ### Cognitive Score time-series (Summer, 2015)
 
 ```{r summer-2015-counts}
-summer.2015.lumos.df %>% count(game) %>% 
-  # Add some human-readable names
-  left_join(summer.2015.lumos.df %>% select(game, game_name) %>% unique(),
-            by="game")
-plot_game(summer.2015.lumos.df)
+# summer.2015.lumos.df %>% count(game) %>% 
+#   # Add some human-readable names
+#   left_join(summer.2015.lumos.df %>% select(game, game_name) %>% unique(),
+#             by="game")
+# plot_game(summer.2015.lumos.df)
 ```
 
 Column {data-width=350}
