@@ -1,0 +1,77 @@
+---
+title: "Basic R"
+author: "Dav Clark"
+date: "September 19, 2017"
+output: html_document
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+```
+
+## Issue #9
+
+*below is a lightly-edited copy-paste of Yusuke's question:
+
+Here, I was trying to make a new data frame (or is this a vector?) with all the mean values of each question:
+
+```{r}
+red_day1 <- data.frame(matrix(sample(1, 18, replace=TRUE), ncol=18))
+red_day1_mean <- colMeans(red_day1)
+red_day1_mean
+```
+
+I get the above table with values of only “1”.
+
+
+I tried this alternative approach:
+
+```{r}
+red_day1_mean <- colMeans(day1, na.rm = FALSE, dims = 1:18)
+red_day1_mean
+```
+
+Dav gets the above error. Yusuke probably meant:
+
+```{r}
+red_day1_mean <- colMeans(red_day1, na.rm = FALSE, dims = 1:18)
+red_day1_mean
+```
+
+In which case we are getting the same error:
+
+```
+first element used of 'length.out' argumentError in dimnames(x)[[dims + 1L]] : recursive indexing failed at level 2
+```
+
+Any idea why I get these outputs? Any suggestions how to solve this? 
+
+### Dav's response
+
+What's going on with that data frame?
+
+```{r}
+red_day1
+```
+
+OK - so that is 1 row, 18 columns. Taking the mean of each column is taking a mean of one number. So, you just get the same things back. My guess is you are trying to create a sample data frame that would make sense to take samples over.
+
+To start, let's look at the help for sample (you need to do this on your own, dear reader!). A quote: "sample takes a sample of the specified size from the elements of x using either with or without replacement." Examples:
+
+```{r}
+# We MUST use replace=TRUE here, as we are taking more items than choices
+# (We can't take 10 unique values from 3 items in `c(1,2,3)`)
+sample(c(1,2,3), 10, replace=TRUE)
+sample(c(2,3,4), 20, replace=TRUE)
+```
+
+So I guess we are trying to make a data frame with some random data. We can feed the above into a data frame constructor. Remember, we are leaning towards tidyverse, which tries to make it harder for us to make mistakes, so we use `data_frame`, not `data.frame` (we can also use the more whimsical and identical `tibble`). There are a couple ways to do this, but here's one of the more sensible ways for now:
+
+```{r}
+# This doesn't need to be a ton of typing, as we can copy-paste the sample bit
+day1_red_alt <- data_frame(a=sample(1:10, 6, replace=TRUE), 
+                           b=sample(1:10, 6),
+                           b=sample(1:10, 6))
+day1_red_alt
+```
+
