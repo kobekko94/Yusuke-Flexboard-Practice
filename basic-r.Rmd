@@ -85,3 +85,17 @@ red_day1 <- data.frame(matrix(sample(1:10, 18, replace=TRUE), ncol=3))
 red_day1
 ```
 
+## More on #8
+
+The above shows how to create a tibble with column names. You use variable names in the function call, as we use for 'a', 'b' and 'c' above.
+
+But if you forgot to do this ahead of time, you do it like this:
+
+```{r}
+colnames(red_day1)
+```
+```{r}
+colnames(red_day1) <- c('new', 'column', 'names')
+red_day1
+```
+
