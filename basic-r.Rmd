@@ -71,7 +71,17 @@ So I guess we are trying to make a data frame with some random data. We can feed
 # This doesn't need to be a ton of typing, as we can copy-paste the sample bit
 day1_red_alt <- data_frame(a=sample(1:10, 6, replace=TRUE), 
                            b=sample(1:10, 6),
-                           b=sample(1:10, 6))
+                           c=sample(1:10, 6))
 day1_red_alt
+day1_red_alt %>% colMeans()
+```
+
+That seems reasonable.
+
+But following closer to what Yusuke initially tried to do:
+
+```{r}
+red_day1 <- data.frame(matrix(sample(1:10, 18, replace=TRUE), ncol=3))
+red_day1
 ```
 
