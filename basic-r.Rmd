@@ -99,3 +99,17 @@ colnames(red_day1) <- c('new', 'column', 'names')
 red_day1
 ```
 
+# A small note on #7
+
+While I don't think this is what Yusuke was talking about. There are many ways
+to format HTML output, though we usually lose the nice paginated table view.
+Here, table formatting is handled by the `kable` function in knitr, which is
+reasonably flexible. You can see that the caption doesn't look very nice. I'm 
+not going to spend the time to make it look nice for now - we'll handle this
+kind of thing within flexdashboard.
+
+```{r}
+knitr::kable(red_day1, format='html', 
+             caption='Some made up data for Team RED, Day 1')
+```
+
