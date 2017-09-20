@@ -56,7 +56,18 @@ red_day1
 
 OK - so that is 1 row, 18 columns. Taking the mean of each column is taking a mean of one number. So, you just get the same things back. My guess is you are trying to create a sample data frame that would make sense to take samples over.
 
-To start, let's look at the help for sample (you need to do this on your own, dear reader!). A quote: "sample takes a sample of the specified size from the elements of x using either with or without replacement." Examples:
+To start, let's look at the help for sample (you need to do this on your own,
+dear reader!). A quote: "sample takes a sample of the specified size from the
+elements of x using either with or without replacement." 
+
+But maybe you wanted just ones... this would do that:
+
+```{r}
+matrix(1, nrow=3, ncol=6)
+```
+
+
+Examples:
 
 ```{r}
 # We MUST use replace=TRUE here, as we are taking more items than choices
@@ -111,5 +122,43 @@ kind of thing within flexdashboard.
 ```{r}
 knitr::kable(red_day1, format='html', 
              caption='Some made up data for Team RED, Day 1')
+```
+
+# Yusuke was truly working with the ADHD surveys
+
+```{r}
+adhd_data <- read_csv('../2017-NZ-reports/deidentified/adhd_survey.csv')
+red_day1 <- adhd_data %>% filter(team == 'RED', day == 'day1')
+red_day1 %>% select(starts_with('adhd')) %>% colMeans(na.rm=TRUE)
+```
+```{r}
+red_day1 %>% select(starts_with('adhd')) %>% 
+  summarise_all(funs(median, mean), na.rm=TRUE)
+```
+
+Note: summarize and summary are quite different.
+  
+```{r}
+summary(red_day1)
+```
+
+
+```{r}
+simple_df <- data_frame(a=c(1,2), b=c(3,NA))
+simple_df
+simple_df %>% colMeans(na.rm=TRUE)
+```
+
+# To look at student mean across questions
+
+```{r}
+colnames(red_day1)
+red_day1['recomputed_total'] <- 
+  red_day1 %>% select(starts_with('adhd')) %>% rowSums()
+red_day1
+```
+
+```{r}
+red_day1 %>% arrange(attention_total)
 ```
 
