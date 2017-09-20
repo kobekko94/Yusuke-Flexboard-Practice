@@ -1,0 +1,18 @@
+---
+title: "Plotting"
+author: "Dav Clark"
+date: "September 19, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+For now this is just an example of making a plot.
+
+```{r}
+qplot(1:10, sin(1:10))
+```
+
+
